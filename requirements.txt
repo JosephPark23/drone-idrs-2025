@@ -1,0 +1,9 @@
+# IDRS dependencies
+pyyaml>=6.0
+numpy>=1.24
+pandas>=2.0
+
+# NOTE: rules do not require sk-learn
+# scikit-learn>=1.3
+# optuna>=3.0
+# matplotlib>=3.7

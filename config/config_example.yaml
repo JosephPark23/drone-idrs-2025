@@ -1,0 +1,38 @@
+# example config.yaml - DJI Neo IDS Configuration
+
+# Base path for resolving relative paths
+base_path: "."
+
+network:
+  # Drone/AP BSSID (DJI Neo in AP mode)
+  drone_mac: "aa:aa:aa:aa:aa:aa"
+
+  # Phone/Controller MACs - List format supports MAC randomization
+  phone_macs:
+    - "aa:aa:aa:aa:aa:aa"   # Phone MAC
+
+# Sniffer configuration
+sniffer:
+  interface: "wlan0"       # Monitor mode interface (change to your interface)
+  bssid: "aa:aa:aa:aa:aa:aa"  # Target BSSID to monitor
+  window_size: 1.0            # Window duration in seconds
+  channel: null               # Optional: lock to specific channel (e.g., 6)
+
+# Rules configuration - TUNED FOR REAL ATTACKS
+rules:
+  # Deauth detection: Deauth frames targeting authorized devices
+  deauth_threshold: 1
+
+  # Unauthorized connection detection
+  unauth_auth_threshold: 2          # Multiple auth attempts = attack
+  unauth_assoc_threshold: 1         # Even one assoc attempt from unknown MAC is suspicious
+  unauth_reassoc_threshold: 1       # Reassoc from unknown MAC = attack
+  unauth_eapol_threshold: 3         # Multiple EAPOL frames from unknown MAC = attack
+  unauth_total_mgmt_threshold: 5    # Total suspicious mgmt frames in 1 second
+  unauth_packet_pct_threshold: 15.0 # If >15% of traffic from unknown MAC = attack
+
+# Alert configuration
+alerts:
+  show_rule_violations: true       # Show details of what triggered
+  summary_interval: 30             # Print stats every 30 seconds
+  alert_cooldown: 3.0              # Seconds to wait before ending alert (prevents flapping)

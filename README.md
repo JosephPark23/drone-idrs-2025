@@ -50,7 +50,7 @@
 
 ### <u>Introduction</u>
 
-**To provide some context, my name is Joseph Park and I am a student researcher interested in cybersecurity** (specific interests include applied cryptography, AI privacy, cyber-physical systems, and offensive security). Some time ago I hacked a DJI Neo, and I thought the results were interesting enough to post online. As a bonus, I wrote some code for a system that would defend the drone from the very same attacks I created.  This system is also included within the repo. 
+**To provide some context, my name is Joseph Park and I am a student researcher interested in cybersecurity** (specific interests include applied cryptography, AI privacy, cyber-physical systems, and offensive security). Some time ago I did vulnerability testing with a DJI Neo, and I thought the results were interesting enough to post online. As a bonus, I wrote some code for a system that would defend the drone from the very same attacks I created.  This system is also included within the repo. 
 
 **I am about 99% sure that no one besides myself will ever see this, but it is still nice having something on the record, for me to remind and inspire myself**, however obscure and small it may be. As such, assured of my faith that no one will ever read this (and because I was seriously bored), I've added "fun versions"&trade; in parts: very un-rigorous and unserious translations of the technical language. On the off chance the reader is actually interested in using this project (if so, thank you!), I've added technical TL;DRs since, if you can't tell already, my writing is long-winded and markedly rife with filler. The slides or paper (I prefer the slides) are also helpful for a general sense of what this project is. 
 

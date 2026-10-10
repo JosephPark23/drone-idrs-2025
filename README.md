@@ -188,7 +188,7 @@ flowchart TD
     E -->|No| F[Continue monitoring<br/>next window]
     E -->|Yes| G[Alert Engine:<br/>Display alert on console]
     G --> H{Unrecognized MAC (potential attacker)?}
-    H -->|Yes| I[Active Response: disconnect attacker<br/>aireplay-ng deauth attacker]
+    H -->|Yes| I[Active Response<br/>aireplay-ng deauth attacker]
     H -->|No| F
     I --> F
     F -.loop.-> B

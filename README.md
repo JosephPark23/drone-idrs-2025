@@ -182,13 +182,13 @@ After a couple of months of vulnerability testing, and after I found some [actua
 ```mermaid
 flowchart TD
     A[DJI Drone Wi-Fi Link] -->|802.11 management frames| B[Sniffer #40;tshark#41;<br/>capture into 1-second windows]
-    B --> C[Preprocess:<br/>Extract window features]
-    C --> D[Rules Engine:<br/>Compare feature stats to thresholds]
+    B --> C[Preprocess:<br/>Extract window statistics]
+    C --> D[Rules Engine:<br/>Compare window stats to rules/thresholds]
     D --> E{Attack detected?}
     E -->|No| F[Continue monitoring<br/>next window]
     E -->|Yes| G[Alert Engine:<br/>Display alert on console]
-    G --> H{Unauthorized MAC?}
-    H -->|Yes| I[Active Response<br/>aireplay-ng deauth attacker]
+    G --> H{Unrecognized MAC (potential attacker)?}
+    H -->|Yes| I[Active Response: disconnect attacker<br/>aireplay-ng deauth attacker]
     H -->|No| F
     I --> F
     F -.loop.-> B

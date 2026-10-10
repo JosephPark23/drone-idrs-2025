@@ -48,8 +48,6 @@
 
 **To provide some context, my name is Joseph Park, and I am a student researcher interested in cybersecurity** (specific interests include applied cryptography, AI privacy, cyber-physical systems, and offensive security). Some time ago I did vulnerability testing with a DJI Neo, and I thought the results were interesting enough to post online. As a bonus, I wrote some code for a system that would defend the drone from the very same attacks I created.  This system is also included within the repo. 
 
-**For my reflections and personal thoughts on this project, please see the *[Limitations and Reflections](https://github.com/JosephPark23/drone-idrs-2025/blob/main/README.md#limitations-reflections-and-motivations)* section.**
-
 Thank you for reading!
 
 ---
@@ -122,7 +120,6 @@ drone-idrs-2025/
 
 **TL;DR**: *Consumer and FPV drones—including the DJI Neo studied in this project—are frequently vulnerable to attack due to weak passwords, weak encryption, or the absence of security protocols altogether. This project presents an IDRS (Intrusion Detection and Response System), which is a Python-based tool that detects and mitigates two real-world attack vectors identified through months of vulnerability testing: unauthorized Wi-Fi access and deauthentication flooding (a denial-of-service attack). Unlike existing tools such as Kismet, which can detect intrusions but not respond to them, IDRS actively blocks unauthorized devices from connecting to the drone's network. In testing across all attack combinations, IDRS detected 100% of intrusion attempts and prevented all unauthorized Wi-Fi access, with average detection-and-response times of 1–3 seconds.*
 
-Fun Version
 
 **1. Problem**
 
@@ -151,7 +148,8 @@ flowchart TD
     H -->|Yes| I[Active Response: disconnect potential attacker<br/>aireplay-ng deauth attacker]
     H -->|No| F
     I --> F
-    F -.loop.-> B```
+    F -.loop.-> B
+```
 
 
 ---

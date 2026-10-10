@@ -48,8 +48,6 @@
 
 **To provide some context, my name is Joseph Park, and I am a student researcher interested in cybersecurity** (specific interests include applied cryptography, AI privacy, cyber-physical systems, and offensive security). Some time ago I did vulnerability testing with a DJI Neo, and I thought the results were interesting enough to post online. As a bonus, I wrote some code for a system that would defend the drone from the very same attacks I created.  This system is also included within the repo. 
 
-**I am about 99% sure that no one besides myself will ever see this, but it is still nice having something on the record, for me to remind and inspire myself**, however obscure and small it may be. As such, assured of my faith that no one will ever read this (and because I was seriously bored), I've added "fun versions"&trade; in parts: very un-rigorous and unserious translations of the technical language. On the off chance the reader is actually interested in using this project (if so, thank you!), I've added technical TL;DRs since, if you can't tell already, my writing is long-winded and markedly rife with filler. The slides or paper (I prefer the slides) are also helpful for a general sense of what this project is. 
-
 **For my reflections and personal thoughts on this project, please see the *[Limitations and Reflections](https://github.com/JosephPark23/drone-idrs-2025/blob/main/README.md#limitations-reflections-and-motivations)* section.**
 
 Thank you for reading!
@@ -94,43 +92,10 @@ This repository is the companion code for the following conference paper and fai
 
 **I had a wonderful opportunity in the summer of 2025 (and into the spring) to work on some drone hacking at George Mason's cybersecurity lab**, and many, many thanks are due to **Dr. Matthew Jablonski** and **Jad Zarzour**, plus **Dr. Duminda Wijesekera** for accepting me into the lab (I seriously can't thank them enough)!
 
- There was so much awesomeness that I can't share it all here, but basically, the process went like this:
-
-> **Dr. Jablonski/Jad** *teaches me drone hacking*: go ham!
-> 
-> **Me:** yay! here I go!
-
-(I may be misremembering the details. GMU - my bad!)
-
-**Where did I start?**
-
-I began with recon, vulnerability testing, and pentesting on the drone, but as a side note, I don't think I can overstate just how helpful the CTFs I'd done before were. Sometimes, I was surprised at just how thoroughly these challenges wove prerequisite skill into me (nothing beats getting hands-on). That being said, working on a real system for the first time was also just incredibly amazing. 
-
-> Me: *reverse engineers* hey I could fix some of this stuff!
-
-Very quickly on, I found that the first thing you need to do when hacking something is to get a snack (I love a good bag of popcorn or gummy bears)**. [The second thing I need to do is really, really understand what I'm hacking](https://www.geeksforgeeks.org/cybersecurity/what-is-reverse-engineering-technique-in-cybersecurity/).** How does this process work? What applications does it run? Obviously, these are (if you distill them enough) different forms of the question "Why?": in other words, the reverse engineering part. After you understand how the system operates, you can start to think of ways to break it.
-
-What followed is that I then started to think of ways to improve on the flawed design. If you understand how a functionality can be compromised, naturally you begin to say, "Well, I could stop this by just doing this.." and so on. And so began my drone IDRS...
-
-> Brain: you didn't do your AP summer assignments yet and you want to do more work??
-
-I ignored my brain 0_0 (please don't do that, it was a very bad decision)
-
 ---
-
-<!-- TODO: awards. Add each as "Placement, Competition Name, Year". Name the competition,
-
-     not personal/location detail. Remove this block if you'd rather not list them.
-
-     Example:
-
-- Finalist, XYZ Regional Science & Engineering Fair, 2025
-
--->
 
 ### Repository structure
 
-<!-- TODO: adjust to match what you actually commit. This reflects the IDS_V3 code you shared. -->
 
 ```
 drone-idrs-2025/
@@ -171,11 +136,6 @@ After a couple of months of vulnerability testing, and after I found some [actua
 
 [When testing different combinations of attack vectors](https://github.com/JosephPark23/drone-idrs-2025/blob/main/presentations/AIAA_Park_Drones.pdf) (the access, the deauth, and both), the system succeeded in detecting all attacks and mitigating all Wi-Fi access attempts. The system was able to detect and respond within 1-3 seconds on average, and was generally inefficient compared to the Kismet baseline it was compared to. It should be noted that the Kismet did not, however, have a response functionality, which could reduce its usage and increase efficiency. More on this later.
 
-<!-- TODO: drop your poster or a key figure here for a quick visual overview, e.g.:
-
-![System overview](docs/figures/poster.png)
-
--->
 
 ### IDRS Control Flow Diagram
 
@@ -191,28 +151,8 @@ flowchart TD
     H -->|Yes| I[Active Response: disconnect potential attacker<br/>aireplay-ng deauth attacker]
     H -->|No| F
     I --> F
-    F -.loop.-> B
-```
+    F -.loop.-> B```
 
----
-
-### Limitations, Reflections, and Motivations
-
-**[This project has many, many, many limitations](https://github.com/JosephPark23/drone-idrs-2025/blob/main/presentations/AIAA_Park_Drones.pdf).** Where do I start?? Only one drone model was studied in this project because of logistics issues. The testing data I used to generate the thresholds was small in sample size. But maybe one of the biggest factors that limits the system's practicality is its efficiency and overhead, in particular the RAM usage. In my own defense, I did not begin with the intention for the IDRS to be a broadly deployed system, so there are many design choices that unwittingly limited efficiency: the program scripts are written in Python (as opposed to a faster systems language like C); the system uses many different system dependecies, and when you integrate independent tools your overhead dramatically increases (because those programs have their own independent resources that they consume); my overall lack of experience in efficient systems design and programming; and so on. Besides efficiency, the detection latency of 1-3 seconds is slightly imperfect for certain critical purposes: if a drone traveling at 20 meters per second is incapacitated for ~0.5-1 seconds, it has already traveled a distance where many things could go wrong. 
-
-**Another issue is use case**. Unfortunately for me (but fortunately for everyone else), evil hackers aren't going around trying to hack everyone else's drones for private information. There's also little to no evidence of these attacks occurring on consumer drones; a bigger current threat would be [battery life](https://mavicpilots.com/threads/quantum-leap-in-battery-duration-for-drones.135821/), reliability of operations, or developing better control technology. 
-
-**Then what, if any, is the purpose of the IDRS, and the project as a whole?** As I mentioned before, [drone security is so notoriously underdeveloped simply because of profit margins and the financial risk](https://www.mdpi.com/2076-3417/12/9/4663). Drone companies are even a little justified - however tenuous said justification may be - because of the aforementioned lack of attacks on consumer drones. Why sacrifice memory, hardware, space, or computational power on an issue that doesn't exist, in a cutthroat market that rewards innovation and features over security? 
-
-**But in dismissing these concerns by the excuse of attack precedent, these companies ignore the propagation of commercial drones in modern society, their increasing integration into critical  infrastructure and civil functioning**. The essence of the point is that absence of evidence does not necessarily equate to evidence of absence. Drones are rapidly increasing in adopting and ownership; when drones become [ubiquitious](https://enterprise.dji.com/public-safety/firefighting), [doubling](https://finance.yahoo.com/technology/articles/military-drone-uav-market-reach-140000751.html), then tripling in individual use; as drones become more visible and [exposed](https://www.unmannedsystemstechnology.com/feature/using-drones-for-critical-infrastructure-inspection/) in [critical infrastructure](https://www.hstoday.us/subject-matter-areas/unmanned-vehicles/how-drones-are-reshaping-aviation-security-and-critical-infrastructure-protection/) - what is to say that drone attacks won't become a larger issue? Raising awareness and transparency for drone security *now* means we will not be lagging ten years behind in the future.
-
-**This brings me to my second reason, one I considered before pursuing the IDRS phase of this project**. Even though I can dream (and dream big), realistically, this IDRS is not going to be adopted by masses of adoring DJI fans; more likely is that the code will sit here and I will have spent ten hours organizing my Desktop files for nothing. But establishing that solutions to drone security exist - even if the implementation is clunky and rough in parts - is at least a step forward for drone security. As far as I can tell, no research has yet been published on a live-tested IDRS for DJI drone Wi-Fi networks (and extremely little research exists in this area in the first place). While I say this, it's also important to acknowledge that novelty should of course never be pursued for novelty's sake; some sort of significant impact should be the first prerequisite for a research undertaking. Thus, I hope that part of this project's impact comes from that same issue of awareness and action for future drone security, where the sooner we start, the better off future society will be. 
-
-**The fact that drone security is poor is not simple conjecture. There are many examples, some that I found even in my own research:** when I was conducting vulnerability analyses and reconnaissance, there were oddities. For example, the vulnerability analysis discovered that after accessing the drone's Wi-Fi network, [there was nothing stopping an attacker from intercepting photos and videos](https://github.com/JosephPark23/drone-idrs-2025/blob/main/presentations/GMU%20Vulnerability%20Assessment%20Presentation.pdf), or, for that matter, requesting photos from the drone's internal storage. [There were unused ports open, namely 21 (FTP)](https://github.com/JosephPark23/drone-idrs-2025/blob/main/presentations/GMU%20Wireless%20Reconnaissance%20findings.pdf), exposing an attack surface for no particular or visible reason. The drone [continually broadcasted the Wi-Fi password](https://github.com/JosephPark23/drone-idrs-2025/blob/main/presentations/GMU%20Wireless%20Reconnaissance%20findings.pdf) on the network (this could be justified by the fact that anyone who compromised the network would already have the password, but this is still redundant and confusing - what purpose does broadcasting the password serve?). And if the deauthentication attacks found in the analysis can sever drone-phone communication within seconds, why, DJI, do you continue to implement chipsets that use WPA2 security when there exists an encryption format, [WPA3,](https://www.malwarebytes.com/cybersecurity/basics/what-is-wpa3) that [prevents this very attack](https://mrncciew.com/2025/12/22/how-to-stop-wi-fi-deauth-attacks-wpa3/)? One may argue that upgrading is difficult because of the increased computational power involved, or since it would reduce compatibility, but to this I would say that a) the [additional processing power needed is minimal](https://www.malwarebytes.com/cybersecurity/basics/what-is-wpa3#:~:text=For%20most%20modern%20routers%20and%20devices%2C%20WPA3%20encryption%20has%20minimal%20impact%20on%20performance.%20However%2C%20older%20routers%20or%20low%2Dpower%20IoT%20devices%20may%20experience%20slight%20slowdowns%20due%20to%20increased%20encryption%20processing.%C2%A0), and b) there are [transition/mixed modes](https://www.malwarebytes.com/cybersecurity/basics/what-is-wpa3#:~:text=For%20networks%20with%20older%20devices%20that%20must%20remain%20connected%2C%20enabling%20WPA3/WPA2%20mixed%20mode%20allows%20them%20to%20continue%20working.%20However%2C%20this%20option%20weakens%20overall%20security%2C%20as%20WPA2%E2%80%99s%20vulnerabilities%20still%20exist.%C2%A0) available. Yes, on mixed modes, WPA2 vulnerabilities exist when using WPA2 connections, but frankly, about every modern smartphone since 2019 has supported WPA3, so to my admittedly inexperienced eye, the compatibility excuse is nonsensical. 
-
-**So ultimately, one of my takeaways from this project** is that, as drone companies grow more important, so too does **the task of holding them accountable for issues and flaws in their designs and products**. If there is no one to call out DJI for their model security decisions, there will almost certainly be an abundance of drones with limited security and, correspondingly, unknowing consumers. 
-
-**The other part of the impact is personal.** This is probably the more important, since, looking back, this project was the stepping stone for me to realize that I could enjoy cybersecurity, and just appreciate its coolness, for lack of a better phrase. I had never worked with a real system before, and to get a little more into my background, I had my first taste of hacking actual systems with simulated challenges in CTFs (picoCTF & National Cyber League represent!). There is a confidence I attained from this project, though, that helped me feel like I really belonged in cybersecurity, that helped feed my dreams of hacking and doing legitimate work. For a foundational experience, it was one of the best choices I could've taken, and that's something I don't take lightly :)
 
 ---
 
@@ -241,12 +181,6 @@ pyyaml
 numpy
 pandas
 ```
-
-<!-- TODO: if you also commit the offline ML training scripts (RF/KNN/SVM), add
-
-     scikit-learn, optuna, matplotlib here. The live IDRS itself does not need them. -->
-
-> **Platform note:** detection works on Linux, macOS, and Windows, but **active mitigation (auto-deauth) is Linux-only**, since the feature uses `aireplay-ng`. On Windows the system runs in detect-only mode. Dual-boot or VMs can be used.
 
 ---
 
@@ -316,10 +250,6 @@ sudo python3 src/alert_interface.py -c config/config.yaml
 (Add `-v` for verbose logging. Press `Ctrl+C` to stop; a session log is automatically saved to `logs/`.)
 
 ---
-
-<!-- TODO: if you want, paste a short sample of the console alert output here in a code block
-
-     so people can see what a detection looks like. -->
 
 ##### Configuration reference
 
